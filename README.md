@@ -17,3 +17,9 @@ Visit http://localhost:5180
 - Free 1-hour intro
 - $100/hour implementation when the upside is clear
 - Stages: See → Speak → Reach → Compound
+
+## How to make money
+
+- `make-money/paths-template.js` — reusable template for 10 AI income paths
+- `make-money/index.html` — overview of the 10 ways
+- `make-money/step-by-step.html` — universal playbook + weekly example
