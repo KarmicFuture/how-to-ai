@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Journey Map — Where Is Your Business? | How to AI</title>
+  <meta name="description" content="Map your business on the AI growth curve — from pencil-and-paper brick and mortar to an autonomous shop where your team focuses on attracting customers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body class="page-inner">
+  <header class="site-header is-scrolled">
+    <a class="logo" href="../index.html">Karmic Futures</a>
+    <nav class="nav" aria-label="Primary">
+      <a class="nav-home" href="../index.html">Home</a>
+      <a href="../index.html#stages">Stages</a>
+      <div class="nav-dropdown is-active">
+        <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-controls="how-to-ai-menu">
+          How to AI
+          <span class="nav-caret" aria-hidden="true"></span>
+        </button>
+        <div class="nav-dropdown-panel" id="how-to-ai-menu">
+          <a href="index.html">Blog home</a>
+          <a href="ai-journey-map.html" aria-current="page">AI Journey Map</a>
+          <a href="what-ai-is.html">What AI actually is</a>
+          <a href="how-to-ask.html">How to ask AI for help</a>
+          <a href="everyday-uses.html">Everyday uses</a>
+          <a href="business-without-code.html">Business without code</a>
+          <a href="stay-in-control.html">Stay in control</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-controls="make-money-menu">
+          How to make money
+          <span class="nav-caret" aria-hidden="true"></span>
+        </button>
+        <div class="nav-dropdown-panel" id="make-money-menu">
+          <a href="../make-money/index.html">10 ways overview</a>
+          <a href="../make-money/step-by-step.html">Step by step</a>
+        </div>
+      </div>
+      <a class="nav-rates" href="../rates.html">Rates</a>
+      <a class="nav-cta" href="../index.html#book">Book intro</a>
+    </nav>
+  </header>
+
+  <main>
+    <nav class="page-back" aria-label="Breadcrumb">
+      <a class="page-back-home" href="../index.html">← Home</a>
+      <span class="page-back-sep" aria-hidden="true">/</span>
+      <a href="index.html">How to AI</a>
+      <span class="page-back-sep" aria-hidden="true">/</span>
+      <span class="page-back-current" aria-current="page">AI Journey Map</span>
+    </nav>
+
+    <section class="page-hero">
+      <div class="section-inner">
+        <p class="eyebrow">How to AI · Assessment</p>
+        <h1>AI Journey Map</h1>
+        <p class="section-lede">
+          From pencil and paper behind the counter to a shop that largely runs itself —
+          so your people can focus on getting and attracting customers.
+        </p>
+        <a class="btn btn-primary" href="#worksheet">Take the worksheet</a>
+      </div>
+    </section>
+
+    <section class="section journey-curve-section" id="curve" aria-labelledby="curve-heading">
+      <div class="section-inner">
+        <p class="eyebrow">The growth curve</p>
+        <h2 id="curve-heading">Six stages on the AI paradigm</h2>
+        <p class="section-lede">
+          Every business sits somewhere on this path. The goal isn’t “more tech.”
+          It’s freeing human energy for relationships and growth.
+        </p>
+
+        <div class="journey-chart" aria-hidden="true">
+          <svg viewBox="0 0 960 360" role="img" focusable="false">
+            <title>AI growth curve from pencil and paper to autonomous shop</title>
+            <defs>
+              <linearGradient id="curveFill" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#6a9480" stop-opacity="0.08" />
+                <stop offset="100%" stop-color="#d8cbb0" stop-opacity="0.22" />
+              </linearGradient>
+              <linearGradient id="curveStroke" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#6a9480" />
+                <stop offset="100%" stop-color="#b8a888" />
+              </linearGradient>
+            </defs>
+            <path
+              class="journey-area"
+              d="M60,300 C180,295 240,270 320,230 C400,190 460,150 540,120 C620,90 700,70 820,55 L900,50 L900,320 L60,320 Z"
+              fill="url(#curveFill)"
+            />
+            <path
+              class="journey-line"
+              d="M60,300 C180,295 240,270 320,230 C400,190 460,150 540,120 C620,90 700,70 820,55 L900,50"
+              fill="none"
+              stroke="url(#curveStroke)"
+              stroke-width="3.5"
+              stroke-linecap="round"
+            />
+            <g class="journey-markers">
+              <circle cx="60" cy="300" r="7" />
+              <circle cx="220" cy="275" r="7" />
+              <circle cx="380" cy="200" r="7" />
+              <circle cx="520" cy="128" r="7" />
+              <circle cx="680" cy="78" r="7" />
+              <circle cx="900" cy="50" r="7" />
+            </g>
+            <g class="journey-axis-labels" fill="#6f7a74" font-size="13" font-family="Manrope, sans-serif">
+              <text x="60" y="345" text-anchor="middle">Pencil</text>
+              <text x="480" y="345" text-anchor="middle">AI-assisted</text>
+              <text x="900" y="345" text-anchor="middle">Autonomous</text>
+            </g>
+          </svg>
+          <div class="journey-marker-live" id="journey-marker" hidden>
+            <span class="journey-marker-dot"></span>
+            <span class="journey-marker-label" id="journey-marker-label">You are here</span>
+          </div>
+        </div>
+
+        <ol class="journey-stages">
+          <li class="journey-stage" data-stage="1">
+            <span class="stage-tag">Stage 1</span>
+            <h3>Pencil &amp; paper</h3>
+            <p>Brick-and-mortar basics. Appointments, inventory, and notes live in notebooks, whiteboards, or memory.</p>
+          </li>
+          <li class="journey-stage" data-stage="2">
+            <span class="stage-tag">Stage 2</span>
+            <h3>Basic digital</h3>
+            <p>You have email, a simple website, or social pages — but work still jumps between apps and sticky notes.</p>
+          </li>
+          <li class="journey-stage" data-stage="3">
+            <span class="stage-tag">Stage 3</span>
+            <h3>AI curious</h3>
+            <p>Someone sometimes asks ChatGPT for a draft. Useful, but not yet part of how the business runs.</p>
+          </li>
+          <li class="journey-stage" data-stage="4">
+            <span class="stage-tag">Stage 4</span>
+            <h3>AI assisted</h3>
+            <p>AI regularly helps with posts, replies, and planning. Humans still copy-paste and push every button.</p>
+          </li>
+          <li class="journey-stage" data-stage="5">
+            <span class="stage-tag">Stage 5</span>
+            <h3>AI integrated</h3>
+            <p>Follow-up, FAQs, and content systems connect. Less retyping. Clearer handoffs. Time starts coming back.</p>
+          </li>
+          <li class="journey-stage" data-stage="6">
+            <span class="stage-tag">Stage 6</span>
+            <h3>Autonomous shop</h3>
+            <p>Routine operations largely run themselves. Your team’s best hours go to attracting and serving customers.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section worksheet-section" id="worksheet" aria-labelledby="worksheet-heading">
+      <div class="section-inner">
+        <p class="eyebrow">Worksheet</p>
+        <h2 id="worksheet-heading">Where are you on the curve?</h2>
+        <p class="section-lede">
+          Answer five questions honestly. We’ll place your business on the map and suggest a next step —
+          not a leap to “fully autonomous” overnight.
+        </p>
+
+        <form class="journey-worksheet" id="journey-form">
+          <fieldset class="ws-block">
+            <legend>1. How do you keep the day’s work organized?</legend>
+            <label><input type="radio" name="q1" value="1" required /> Pencil, paper, whiteboard, or memory</label>
+            <label><input type="radio" name="q1" value="2" /> Spreadsheets, email folders, or a basic app — still mostly manual</label>
+            <label><input type="radio" name="q1" value="3" /> We’ve tried AI once or twice to clean up notes</label>
+            <label><input type="radio" name="q1" value="4" /> AI drafts checklists or summaries most weeks</label>
+            <label><input type="radio" name="q1" value="5" /> Shared systems + AI keep tasks moving with light oversight</label>
+            <label><input type="radio" name="q1" value="6" /> Routine ops update themselves; people only handle exceptions</label>
+          </fieldset>
+
+          <fieldset class="ws-block">
+            <legend>2. How do customer messages get handled?</legend>
+            <label><input type="radio" name="q2" value="1" required /> Phone calls and handwritten notes</label>
+            <label><input type="radio" name="q2" value="2" /> Email/texts, but slow or uneven replies</label>
+            <label><input type="radio" name="q2" value="3" /> Someone drafts with AI when they’re stuck</label>
+            <label><input type="radio" name="q2" value="4" /> AI helps reply to reviews, FAQs, and follow-ups often</label>
+            <label><input type="radio" name="q2" value="5" /> Lead follow-up and FAQs are partly automated</label>
+            <label><input type="radio" name="q2" value="6" /> Most routine questions resolve without a person; humans take the warm conversations</label>
+          </fieldset>
+
+          <fieldset class="ws-block">
+            <legend>3. How do you create marketing and offers?</legend>
+            <label><input type="radio" name="q3" value="1" required /> Word of mouth, flyers, or nothing consistent</label>
+            <label><input type="radio" name="q3" value="2" /> Occasional posts when someone has time</label>
+            <label><input type="radio" name="q3" value="3" /> AI has written a post or two for us</label>
+            <label><input type="radio" name="q3" value="4" /> We use AI weekly for captions, emails, or ideas</label>
+            <label><input type="radio" name="q3" value="5" /> A content system keeps us visible without starting from zero</label>
+            <label><input type="radio" name="q3" value="6" /> Promotion runs on a steady engine; the team focuses on campaigns and relationships</label>
+          </fieldset>
+
+          <fieldset class="ws-block">
+            <legend>4. Where does most employee time go today?</legend>
+            <label><input type="radio" name="q4" value="1" required /> Paperwork, hunting for information, redoing the same tasks</label>
+            <label><input type="radio" name="q4" value="2" /> Mix of serving customers and digital busywork</label>
+            <label><input type="radio" name="q4" value="3" /> Still mostly ops — AI is a side experiment</label>
+            <label><input type="radio" name="q4" value="4" /> Some hours freed; still lots of copy-paste and admin</label>
+            <label><input type="radio" name="q4" value="5" /> Ops is lighter; more time for service quality</label>
+            <label><input type="radio" name="q4" value="6" /> Best hours go to attracting and delighting customers — automation covers the routine</label>
+          </fieldset>
+
+          <fieldset class="ws-block">
+            <legend>5. What best describes your goal for the next year?</legend>
+            <label><input type="radio" name="q5" value="1" required /> Just get organized somehow</label>
+            <label><input type="radio" name="q5" value="2" /> Make digital tools less chaotic</label>
+            <label><input type="radio" name="q5" value="3" /> Learn what AI can safely do for us</label>
+            <label><input type="radio" name="q5" value="4" /> Use AI every week without overwhelm</label>
+            <label><input type="radio" name="q5" value="5" /> Connect AI into real workflows that save hours</label>
+            <label><input type="radio" name="q5" value="6" /> Run an autonomous-leaning shop so humans sell, serve, and grow</label>
+          </fieldset>
+
+          <div class="ws-actions">
+            <button class="btn btn-primary" type="submit">See my place on the map</button>
+            <button class="btn btn-ghost btn-ghost-dark" type="reset" id="ws-reset">Reset</button>
+          </div>
+        </form>
+
+        <div class="ws-result" id="ws-result" hidden>
+          <p class="eyebrow">Your result</p>
+          <h3 id="ws-result-title">Stage —</h3>
+          <p id="ws-result-summary"></p>
+          <p id="ws-result-next"></p>
+          <div class="hero-actions" style="opacity: 1; animation: none; margin-top: 1.25rem;">
+            <a class="btn btn-primary" href="../index.html#book">Book a free intro to plan the next stage</a>
+            <a class="btn btn-ghost btn-ghost-dark" href="business-without-code.html">Read: business without code</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section book">
+      <div class="section-inner book-panel">
+        <p class="brand-mark">Karmic Futures</p>
+        <h2>Move one stage at a time</h2>
+        <p class="section-lede">
+          The map shows where you are. A free intro helps choose the smallest step that frees people
+          to attract customers — not busywork.
+        </p>
+        <a class="btn btn-primary" href="../index.html#book">Book your intro</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p><span>Karmic Futures</span> — Practical AI guidance for local business growth. Open to everyone.</p>
+  </footer>
+
+  <script src="journey-map.js"></script>
+  <script src="../main.js"></script>
+</body>
+</html>
