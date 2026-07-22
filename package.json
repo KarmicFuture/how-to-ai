@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "description": "How to AI — Karmic Futures helping local businesses grow in our AI world",
   "private": true,
+  "type": "module",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
-    "start": "serve -s dist -l tcp://0.0.0.0:3000",
-    "dev": "serve -s . -l 3000"
+    "start": "NODE_ENV=production node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
-    "serve": "^14.2.4"
+    "express": "^4.21.2",
+    "nodemailer": "^6.10.1"
   }
 }

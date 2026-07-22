@@ -45,3 +45,18 @@ Or without Node: `python3 -m http.server 5180`
 - `make-money/paths-template.js` — reusable template for 10 AI income paths
 - `make-money/index.html` — overview of the 10 ways
 - `make-money/step-by-step.html` — universal playbook + weekly example
+- `make-money/examples/` — worked example for each path
+
+
+## Free Workshop
+
+- Page: `workshop/index.html`
+- API: `POST /api/workshop/register|verify|access` (see `server.js`)
+- Registrations saved in `data/workshop-registrations.json`
+- Saturdays 10–11 AM Eastern starting Aug 1, 2026
+- Configure SMTP via `.env` (see `.env.example`); without SMTP, codes appear on-page for local testing
+
+```bash
+npm install
+npm run dev
+```

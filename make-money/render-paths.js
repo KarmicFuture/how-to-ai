@@ -26,7 +26,7 @@
             <dd>${path.whyItPays}</dd>
           </div>
           <div>
-            <dt>Typical range</dt>
+            <dt>Local-friendly range</dt>
             <dd>${path.earnings}</dd>
           </div>
           <div>
@@ -40,6 +40,9 @@
             ${path.steps.map((step) => `<li>${step}</li>`).join("")}
           </ol>
         </div>
+        <p class="path-example-link">
+          <a href="examples/${path.id}.html">See an example of how this works →</a>
+        </p>
       </article>
     `
     )
