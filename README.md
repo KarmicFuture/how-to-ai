@@ -17,15 +17,19 @@ Or without Node: `python3 -m http.server 5180`
 
 ## Deploy on Hostinger (Node.js web app)
 
-1. Add website → **Node.js web app** (GitHub or ZIP).
+1. Add website → **Node.js web app** / Deploy Web App (GitHub).
 2. Use these settings:
-   - **Node version:** 18, 20, or 22
+   - **Node version:** 20 (or 18/22)
    - **Build command:** `npm run build`
    - **Start command:** `npm start`
+   - **Application startup / entry file:** `server.js` (repo root) **or** `dist/server.js`
    - **Output directory:** `dist`
-3. Redeploy after each push (or enable auto-deploy if your plan supports it).
+3. Environment variables (hPanel):
+   - `PORT` — leave Hostinger’s value (do not hardcode)
+   - Optional SMTP: `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`
+4. Redeploy after each push. Smoke-test: `/health` and `/api/workshop/sessions` should return JSON.
 
-`package.json` builds the static site into `dist/` and serves it on port **3000**.
+`npm run build` copies the site **plus** `server.js` and `lib/` into `dist/`, so Hostinger can start the app even when it treats `dist` as the app root. The server listens on `process.env.PORT` (Hostinger injects this).
 
 ## Offer
 

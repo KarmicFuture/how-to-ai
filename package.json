@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs",
-    "start": "NODE_ENV=production node server.js",
+    "start": "node server.js",
+    "start:dist": "node dist/server.js",
     "dev": "node server.js"
   },
   "dependencies": {
