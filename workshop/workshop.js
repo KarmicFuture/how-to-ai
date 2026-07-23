@@ -19,6 +19,7 @@
   let viewYear = 2026;
   let viewMonth = 7; // August (0-indexed)
   let selectedDate = null;
+  let isVerified = false;
 
   function setStatus(message, isError) {
     if (!statusEl) return;
@@ -118,6 +119,11 @@
     renderCalendarGrid();
   }
 
+  function focusRegister() {
+    showPanel("register");
+    authEl?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
   function renderSessionDetail(session) {
     if (!detailEl) return;
     if (!session) {
@@ -126,18 +132,28 @@
       return;
     }
 
-    const meeting = session.meetingUrl
-      ? `<a class="btn btn-primary" href="${session.meetingUrl}" target="_blank" rel="noopener">Join meeting</a>`
-      : `<p class="ws-meeting-pending">${session.meetingNote || "Meeting link coming soon"}</p>`;
+    let actionHtml;
+    if (!isVerified) {
+      actionHtml = `
+        <p class="ws-meeting-pending">Register free to unlock the meeting link for this session.</p>
+        <button type="button" class="btn btn-primary" id="ws-detail-register">Register to join</button>
+      `;
+    } else if (session.meetingUrl) {
+      actionHtml = `<a class="btn btn-primary" href="${session.meetingUrl}" target="_blank" rel="noopener">Join meeting</a>`;
+    } else {
+      actionHtml = `<p class="ws-meeting-pending">${session.meetingNote || "Meeting link coming soon"}</p>`;
+    }
 
     detailEl.hidden = false;
     detailEl.innerHTML = `
-      <p class="eyebrow">Selected session</p>
+      <p class="eyebrow">Selected Saturday</p>
       <h4>${session.title}</h4>
       <p class="ws-session-when">${formatDateLabel(session.date)}</p>
       <p class="ws-session-time">${session.startsAt}–${session.endsAt} ${session.timezoneLabel || "Eastern"}</p>
-      <div class="ws-session-action">${meeting}</div>
+      <div class="ws-session-action">${actionHtml}</div>
     `;
+
+    document.getElementById("ws-detail-register")?.addEventListener("click", focusRegister);
   }
 
   function renderCalendarGrid() {
@@ -155,11 +171,13 @@
     for (let day = 1; day <= daysInMonth; day += 1) {
       const key = dateKeyFromParts(viewYear, viewMonth, day);
       const session = sessionsByDate.get(key);
+      const dow = new Date(viewYear, viewMonth, day).getDay();
       const isToday = key === today;
       const isSelected = key === selectedDate;
       const classes = [
         "ws-cal-cell",
         "ws-cal-day",
+        dow === 6 ? "is-saturday" : "",
         session ? "has-session" : "",
         isToday ? "is-today" : "",
         isSelected ? "is-selected" : "",
@@ -177,7 +195,7 @@
             aria-label="Workshop on ${formatDateLabel(key)}, 10 to 11 AM Eastern"
           >
             <span class="ws-cal-num">${day}</span>
-            <span class="ws-cal-mark">Workshop</span>
+            <span class="ws-cal-mark">10–11am</span>
           </button>
         `);
       } else {
@@ -193,18 +211,18 @@
       <div class="ws-cal" role="region" aria-label="Workshop month calendar">
         <div class="ws-cal-toolbar">
           <button type="button" class="ws-cal-nav" id="ws-cal-prev" aria-label="Previous month">‹</button>
-          <h4 class="ws-cal-month" id="ws-cal-month">${monthLabel(viewYear, viewMonth)}</h4>
+          <h3 class="ws-cal-month" id="ws-cal-month">${monthLabel(viewYear, viewMonth)}</h3>
           <button type="button" class="ws-cal-nav" id="ws-cal-next" aria-label="Next month">›</button>
         </div>
         <div class="ws-cal-weekdays" aria-hidden="true">
-          ${WEEKDAYS.map((d) => `<span>${d}</span>`).join("")}
+          ${WEEKDAYS.map((d) => `<span class="${d === "Sat" ? "is-saturday" : ""}">${d}</span>`).join("")}
         </div>
         <div class="ws-cal-grid">
           ${cells.join("")}
         </div>
         <p class="ws-cal-legend">
           <span class="ws-cal-legend-swatch" aria-hidden="true"></span>
-          Saturdays with a live workshop (10:00–11:00 AM Eastern)
+          Live workshop Saturdays · 10:00–11:00 AM Eastern
         </p>
       </div>
     `;
@@ -233,17 +251,43 @@
       }
       return;
     }
-    pickInitialView();
+    if (!selectedDate) pickInitialView();
+    else {
+      // Keep current month if user already navigated; still ensure selection exists
+      if (!sessionsByDate.has(selectedDate)) pickInitialView();
+    }
     renderCalendarGrid();
   }
 
-  async function openRoom(registration, sessions) {
+  async function loadPublicCalendar() {
+    try {
+      const res = await fetch("/api/workshop/sessions");
+      const data = await res.json();
+      renderCalendar(data.sessions || []);
+    } catch {
+      if (calendarEl) {
+        calendarEl.innerHTML = "<p>Could not load the calendar. Refresh to try again.</p>";
+      }
+    }
+  }
+
+  function openRoom(registration, sessions) {
+    isVerified = true;
     authEl.hidden = true;
     roomEl.hidden = false;
     document.getElementById("room-name").textContent = registration.firstName || "friend";
     document.getElementById("room-email").textContent = registration.email;
-    renderCalendar(sessions || []);
+    if (sessions?.length) renderCalendar(sessions);
+    else renderCalendarGrid();
     setStatus("");
+  }
+
+  function closeRoom() {
+    isVerified = false;
+    roomEl.hidden = true;
+    authEl.hidden = false;
+    showPanel("access");
+    renderCalendarGrid();
   }
 
   async function api(path, body) {
@@ -317,7 +361,7 @@
       });
       saveSession(data.registration);
       const access = await api("/api/workshop/access", { email: data.registration.email });
-      await openRoom(access.registration, access.sessions);
+      openRoom(access.registration, access.sessions);
     } catch (err) {
       setStatus(err.message, true);
     }
@@ -330,7 +374,7 @@
     try {
       const data = await api("/api/workshop/access", { email });
       saveSession(data.registration);
-      await openRoom(data.registration, data.sessions);
+      openRoom(data.registration, data.sessions);
     } catch (err) {
       setStatus(err.message, true);
     }
@@ -338,29 +382,12 @@
 
   document.getElementById("ws-signout")?.addEventListener("click", () => {
     clearSession();
-    roomEl.hidden = true;
-    authEl.hidden = false;
-    showPanel("access");
+    closeRoom();
     setStatus("Signed out. Enter your verified email to return.");
   });
 
-  // Restore session if still verified server-side
   (async function boot() {
-    const wantsPreview = new URLSearchParams(window.location.search).has("preview");
-    if (wantsPreview) {
-      try {
-        const res = await fetch("/api/workshop/sessions");
-        const data = await res.json();
-        await openRoom(
-          { firstName: "Preview", email: "preview@local" },
-          data.sessions || []
-        );
-        setStatus("Preview mode — calendar only (not a real registration).");
-        return;
-      } catch {
-        setStatus("Could not load preview calendar.", true);
-      }
-    }
+    await loadPublicCalendar();
 
     const session = readSession();
     if (!session?.email) {
@@ -369,7 +396,7 @@
     }
     try {
       const data = await api("/api/workshop/access", { email: session.email });
-      await openRoom(data.registration, data.sessions);
+      openRoom(data.registration, data.sessions);
     } catch {
       clearSession();
       showPanel("access");

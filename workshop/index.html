@@ -59,85 +59,91 @@
         <p class="eyebrow">Free · Live</p>
         <h1>How to AI workshop</h1>
         <p class="section-lede">
-          Saturdays, 10:00–11:00 AM Eastern. Register with your name and email,
-          verify once, then return anytime with that email.
+          Saturdays, 10:00–11:00 AM Eastern. Browse the calendar below,
+          then register once to get meeting access.
         </p>
       </div>
     </section>
 
     <section class="section workshop-section">
       <div class="section-inner workshop-layout">
-        <div class="workshop-auth" id="workshop-auth">
-          <div class="ws-panel" id="panel-register">
-            <h2>Register (free)</h2>
-            <p class="ws-help">We’ll email a 6-digit code to verify it’s you.</p>
-            <form id="form-register">
-              <label>
-                First name
-                <input type="text" name="firstName" autocomplete="given-name" required maxlength="80" />
-              </label>
-              <label>
-                Email
-                <input type="email" name="email" autocomplete="email" required maxlength="120" />
-              </label>
-              <button class="btn btn-primary" type="submit">Send verification code</button>
-            </form>
-            <p class="ws-switch">Already verified? <button type="button" class="linkish" data-show="access">Access with email</button></p>
-          </div>
-
-          <div class="ws-panel" id="panel-verify" hidden>
-            <h2>Verify your email</h2>
-            <p class="ws-help">Enter the code we sent to <strong id="verify-email-label"></strong>.</p>
-            <form id="form-verify">
-              <input type="hidden" name="email" id="verify-email" />
-              <label>
-                Verification code
-                <input type="text" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required placeholder="6-digit code" />
-              </label>
-              <button class="btn btn-primary" type="submit">Verify &amp; open workshop</button>
-            </form>
-            <p class="ws-switch">
-              <button type="button" class="linkish" data-show="register">Start over</button>
-              ·
-              <button type="button" class="linkish" id="resend-code">Resend code</button>
-            </p>
-            <p class="ws-debug" id="debug-code" hidden></p>
-          </div>
-
-          <div class="ws-panel" id="panel-access" hidden>
-            <h2>Access the workshop</h2>
-            <p class="ws-help">Use the email you already verified.</p>
-            <form id="form-access">
-              <label>
-                Verified email
-                <input type="email" name="email" autocomplete="email" required maxlength="120" />
-              </label>
-              <button class="btn btn-primary" type="submit">Open workshop calendar</button>
-            </form>
-            <p class="ws-switch">Need to register? <button type="button" class="linkish" data-show="register">Create access</button></p>
-          </div>
-
-          <p class="ws-status" id="ws-status" role="status" aria-live="polite"></p>
-        </div>
-
-        <div class="workshop-room" id="workshop-room" hidden>
-          <div class="ws-room-head">
-            <div>
-              <p class="eyebrow">You’re in</p>
-              <h2>Welcome, <span id="room-name">friend</span></h2>
-              <p class="ws-help">Signed in as <span id="room-email"></span></p>
-            </div>
-            <button type="button" class="btn btn-ghost btn-ghost-dark" id="ws-signout">Sign out</button>
-          </div>
-
-          <h3 class="ws-cal-heading">Workshop calendar</h3>
+        <div class="workshop-schedule">
+          <h2 class="ws-cal-heading">Workshop calendar</h2>
           <p class="ws-help">
-            One live session every Saturday, <strong>10:00–11:00 AM Eastern</strong>,
-            starting the first week of August 2026. Select a highlighted Saturday for details.
+            Every Saturday, <strong>10:00–11:00 AM Eastern</strong>, starting August 2026.
+            Green days are live sessions — click one for details.
           </p>
-          <div class="workshop-calendar" id="workshop-calendar" aria-live="polite"></div>
+          <div class="workshop-calendar" id="workshop-calendar" aria-live="polite">
+            <p class="ws-cal-loading">Loading calendar…</p>
+          </div>
           <div class="ws-cal-detail" id="ws-cal-detail" hidden></div>
         </div>
+
+        <aside class="workshop-side" id="workshop-side">
+          <div class="workshop-auth" id="workshop-auth">
+            <div class="ws-panel" id="panel-register">
+              <h2>Register (free)</h2>
+              <p class="ws-help">We’ll email a 6-digit code so you can join the live sessions.</p>
+              <form id="form-register">
+                <label>
+                  First name
+                  <input type="text" name="firstName" autocomplete="given-name" required maxlength="80" />
+                </label>
+                <label>
+                  Email
+                  <input type="email" name="email" autocomplete="email" required maxlength="120" />
+                </label>
+                <button class="btn btn-primary" type="submit">Send verification code</button>
+              </form>
+              <p class="ws-switch">Already verified? <button type="button" class="linkish" data-show="access">Access with email</button></p>
+            </div>
+
+            <div class="ws-panel" id="panel-verify" hidden>
+              <h2>Verify your email</h2>
+              <p class="ws-help">Enter the code we sent to <strong id="verify-email-label"></strong>.</p>
+              <form id="form-verify">
+                <input type="hidden" name="email" id="verify-email" />
+                <label>
+                  Verification code
+                  <input type="text" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required placeholder="6-digit code" />
+                </label>
+                <button class="btn btn-primary" type="submit">Verify &amp; unlock access</button>
+              </form>
+              <p class="ws-switch">
+                <button type="button" class="linkish" data-show="register">Start over</button>
+                ·
+                <button type="button" class="linkish" id="resend-code">Resend code</button>
+              </p>
+              <p class="ws-debug" id="debug-code" hidden></p>
+            </div>
+
+            <div class="ws-panel" id="panel-access" hidden>
+              <h2>Access the workshop</h2>
+              <p class="ws-help">Use the email you already verified.</p>
+              <form id="form-access">
+                <label>
+                  Verified email
+                  <input type="email" name="email" autocomplete="email" required maxlength="120" />
+                </label>
+                <button class="btn btn-primary" type="submit">Unlock meeting access</button>
+              </form>
+              <p class="ws-switch">Need to register? <button type="button" class="linkish" data-show="register">Create access</button></p>
+            </div>
+
+            <p class="ws-status" id="ws-status" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="workshop-room" id="workshop-room" hidden>
+            <div class="ws-room-head">
+              <div>
+                <p class="eyebrow">You’re in</p>
+                <h2>Welcome, <span id="room-name">friend</span></h2>
+                <p class="ws-help">Signed in as <span id="room-email"></span>. Meeting links unlock on selected Saturdays.</p>
+              </div>
+              <button type="button" class="btn btn-ghost btn-ghost-dark" id="ws-signout">Sign out</button>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
   </main>

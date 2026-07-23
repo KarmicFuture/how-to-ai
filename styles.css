@@ -1305,7 +1305,21 @@ a {
 }
 
 .workshop-layout {
-  max-width: 760px;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.85fr);
+  gap: clamp(1.75rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.workshop-schedule {
+  min-width: 0;
+}
+
+@media (max-width: 840px) {
+  .workshop-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ws-panel {
@@ -1417,15 +1431,19 @@ a {
 }
 
 .workshop-calendar {
-  margin-top: 1.5rem;
+  margin-top: 1.15rem;
+}
+
+.ws-cal-loading {
+  color: var(--muted);
+  font-weight: 600;
 }
 
 .ws-cal {
-  background:
-    linear-gradient(165deg, rgba(106, 148, 128, 0.08), transparent 42%),
-    linear-gradient(180deg, #fbfcfb, var(--fog));
-  border: 1px solid rgba(47, 54, 51, 0.08);
-  padding: 1.1rem clamp(0.85rem, 2.5vw, 1.35rem) 1.25rem;
+  background: var(--white);
+  border: 1px solid rgba(47, 54, 51, 0.14);
+  box-shadow: 0 18px 40px rgba(47, 54, 51, 0.06);
+  padding: 1rem clamp(0.65rem, 2vw, 1.15rem) 1.15rem;
 }
 
 .ws-cal-toolbar {
@@ -1433,40 +1451,42 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .ws-cal-month {
   font-family: var(--font-brand);
-  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  font-size: clamp(1.25rem, 2.8vw, 1.55rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   text-align: center;
   flex: 1;
+  margin: 0;
 }
 
 .ws-cal-nav {
-  width: 2.4rem;
-  height: 2.4rem;
-  border: 1px solid rgba(47, 54, 51, 0.14);
-  background: var(--white);
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(47, 54, 51, 0.16);
+  background: var(--mist);
   color: var(--ink);
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
   transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
 }
 
 .ws-cal-nav:hover {
-  background: rgba(106, 148, 128, 0.12);
+  background: rgba(106, 148, 128, 0.14);
   border-color: rgba(106, 148, 128, 0.45);
 }
 
 .ws-cal-weekdays {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.35rem;
-  margin-bottom: 0.4rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border: 1px solid rgba(47, 54, 51, 0.12);
+  border-bottom: 0;
+  background: var(--fog);
 }
 
 .ws-cal-weekdays span {
@@ -1476,37 +1496,60 @@ a {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
-  padding: 0.25rem 0;
+  padding: 0.55rem 0.15rem;
+  border-right: 1px solid rgba(47, 54, 51, 0.1);
+}
+
+.ws-cal-weekdays span:last-child,
+.ws-cal-weekdays span.is-saturday {
+  border-right: 0;
+  color: var(--leaf-deep);
+  background: rgba(106, 148, 128, 0.1);
 }
 
 .ws-cal-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.35rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border: 1px solid rgba(47, 54, 51, 0.12);
+  background: var(--white);
 }
 
 .ws-cal-cell {
-  min-height: 3.6rem;
-  border: 1px solid transparent;
-  background: transparent;
-  padding: 0.35rem 0.25rem;
+  aspect-ratio: 1 / 1;
+  min-height: 0;
+  border-right: 1px solid rgba(47, 54, 51, 0.1);
+  border-bottom: 1px solid rgba(47, 54, 51, 0.1);
+  background: var(--white);
+  padding: 0.4rem 0.25rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
-  gap: 0.2rem;
+  gap: 0.25rem;
   font: inherit;
   color: var(--ink-soft);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ws-cal-cell:nth-child(7n) {
+  border-right: 0;
 }
 
 .ws-cal-cell.is-empty {
-  visibility: hidden;
+  background: #f3f5f4;
+}
+
+.ws-cal-day.is-saturday:not(.has-session) {
+  background: rgba(106, 148, 128, 0.04);
 }
 
 .ws-cal-num {
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 1.2;
+  align-self: flex-end;
+  padding-right: 0.15rem;
 }
 
 .ws-cal-day.is-today .ws-cal-num {
@@ -1517,42 +1560,43 @@ a {
 
 .ws-cal-day.has-session {
   cursor: pointer;
-  background: rgba(106, 148, 128, 0.14);
-  border-color: rgba(106, 148, 128, 0.28);
+  background: rgba(106, 148, 128, 0.18);
   color: var(--ink);
-  transition: transform 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .ws-cal-day.has-session:hover {
-  background: rgba(106, 148, 128, 0.22);
-  border-color: rgba(77, 115, 98, 0.55);
-  transform: translateY(-1px);
+  background: rgba(106, 148, 128, 0.3);
 }
 
 .ws-cal-day.has-session.is-selected {
   background: var(--leaf-deep);
-  border-color: var(--leaf-deep);
   color: var(--white);
 }
 
 .ws-cal-day.has-session.is-selected .ws-cal-mark {
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .ws-cal-mark {
-  font-size: 0.58rem;
+  display: inline-block;
+  margin-top: auto;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--leaf-deep);
-  line-height: 1.1;
+  line-height: 1.15;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 0.15rem 0.28rem;
 }
 
 .ws-cal-legend {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  margin-top: 1rem;
+  margin-top: 0.9rem;
   font-size: 0.88rem;
   color: var(--muted);
 }
@@ -1593,6 +1637,9 @@ a {
 
 .ws-cal-detail .ws-session-action {
   margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
 }
 
 .ws-meeting-pending {
@@ -1600,6 +1647,15 @@ a {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--muted);
+}
+
+.workshop-side .ws-panel {
+  max-width: none;
+}
+
+.workshop-side .ws-room-head {
+  margin-bottom: 0;
+  flex-direction: column;
 }
 
 @keyframes ws-detail-in {
@@ -1615,26 +1671,27 @@ a {
 
 @media (max-width: 560px) {
   .ws-cal-cell {
-    min-height: 3.1rem;
-    padding: 0.3rem 0.1rem;
+    padding: 0.28rem 0.12rem;
   }
 
   .ws-cal-mark {
     font-size: 0.5rem;
+    padding: 0.1rem 0.18rem;
   }
 
   .ws-cal-num {
-    font-size: 0.88rem;
+    font-size: 0.82rem;
+  }
+
+  .ws-cal-weekdays span {
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ws-cal-detail {
     animation: none;
-  }
-
-  .ws-cal-day.has-session:hover {
-    transform: none;
   }
 }
 
