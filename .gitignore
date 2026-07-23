@@ -6,3 +6,5 @@ data/
 .env
 .env.*
 !.env.example
+
+.preview-*.png
