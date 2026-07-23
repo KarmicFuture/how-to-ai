@@ -8,6 +8,11 @@ const {
   getWorkshopSessions,
 } = require("./lib/workshop-store.js");
 const { sendVerificationEmail } = require("./lib/mail.js");
+const {
+  captureLead,
+  createDownloadToken,
+  verifyDownloadToken,
+} = require("./lib/mailchimp.js");
 
 const app = express();
 const port = Number(process.env.PORT) || 3000;
@@ -103,6 +108,48 @@ app.post("/api/workshop/access", (req, res) => {
 
 app.get("/api/workshop/sessions", (_req, res) => {
   res.json({ ok: true, sessions: getWorkshopSessions() });
+});
+
+const pdfPath = join(__dirname, "downloads", "5-signs-leaving-ai-money.pdf");
+
+app.post("/api/lead-magnet/subscribe", async (req, res) => {
+  try {
+    const email = String(req.body?.email || "").trim();
+    const firstName = String(req.body?.firstName || "").trim();
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ ok: false, error: "A valid email address is required." });
+    }
+
+    const result = await captureLead({
+      email,
+      firstName,
+      source: "homepage-lead-magnet",
+    });
+    const token = createDownloadToken(email);
+    return res.json({
+      ok: true,
+      message: result.message,
+      mode: result.mode,
+      downloadUrl: `/api/lead-magnet/download?token=${encodeURIComponent(token)}`,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      ok: false,
+      error: err.message || "Could not complete signup. Please try again.",
+    });
+  }
+});
+
+app.get("/api/lead-magnet/download", (req, res) => {
+  const email = verifyDownloadToken(req.query.token);
+  if (!email) {
+    return res.status(403).send("This download link is invalid or expired. Please request the guide again.");
+  }
+  if (!existsSync(pdfPath)) {
+    return res.status(404).send("Guide not found on the server yet.");
+  }
+  res.download(pdfPath, "5-Signs-Leaving-AI-Money-on-the-Table.pdf");
 });
 
 app.use(express.static(staticDir));

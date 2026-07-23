@@ -10,9 +10,11 @@ const staticEntries = [
   "rates.html",
   "styles.css",
   "main.js",
+  "lead-magnet.js",
   "make-money",
   "how-to-ai",
   "workshop",
+  "downloads",
 ];
 
 // Runtime files Hostinger needs inside the output directory

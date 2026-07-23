@@ -64,7 +64,35 @@ A live **503** almost always means the Node process never started (wrong entry f
 - API: `POST /api/workshop/register|verify|access` (see `server.js`)
 - Registrations saved in `data/workshop-registrations.json`
 - Saturdays 10–11 AM Eastern starting Aug 1, 2026
+- Paid upsell: **$79/person**, max **10 seats** (`#paid-workshop`)
 - Configure SMTP via `.env` (see `.env.example`); without SMTP, codes appear on-page for local testing
+
+## Lead magnet (homepage)
+
+- Offer: free PDF `downloads/5-signs-leaving-ai-money.pdf`
+- Form: `#free-guide` on `index.html`
+- API: `POST /api/lead-magnet/subscribe` → Mailchimp + download token
+- Download: `GET /api/lead-magnet/download?token=…` (1-hour link)
+
+### Mailchimp setup
+
+1. Create a free Mailchimp audience.
+2. Account → Extras → API keys → create a key (`…-usXX`).
+3. Audience → Settings → Audience name and defaults → copy **Audience ID**.
+4. In Hostinger env vars (or local `.env`):
+
+```bash
+MAILCHIMP_API_KEY=yourkey-usXX
+MAILCHIMP_AUDIENCE_ID=xxxxxxxxxx
+MAILCHIMP_STATUS=subscribed
+DOWNLOAD_SECRET=long-random-string
+```
+
+Without Mailchimp configured, emails are saved under `data/` and the PDF still unlocks (local/dev).
+
+## Rates
+
+- Free intro · $99/hr blocks · **$249/mo AI Growth Retainer** · $79 paid workshop · SOW TBD
 
 ```bash
 npm install
