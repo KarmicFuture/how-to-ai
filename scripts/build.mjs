@@ -16,7 +16,7 @@ const staticEntries = [
 ];
 
 // Runtime files Hostinger needs inside the output directory
-const runtimeEntries = ["server.js", "lib"];
+const runtimeEntries = ["app.js", "server.js", "lib"];
 
 if (existsSync(dist)) {
   rmSync(dist, { recursive: true, force: true });
@@ -43,8 +43,9 @@ writeFileSync(
       private: true,
       type: "module",
       engines: pkg.engines,
+      main: "app.js",
       scripts: {
-        start: "node server.js",
+        start: "node app.js",
       },
       dependencies: pkg.dependencies,
     },

@@ -119,6 +119,15 @@ app.use((req, res) => {
 });
 
 function start() {
+  // Older Hostinger/Passenger setups expect this instead of a TCP port.
+  if (typeof globalThis.PhusionPassenger !== "undefined") {
+    globalThis.PhusionPassenger.configure({ autoInstall: false });
+    app.listen("passenger");
+    console.log("Karmic Futures listening via Phusion Passenger");
+    console.log(`Serving static files from ${staticDir}`);
+    return;
+  }
+
   const server = app.listen(port, "0.0.0.0", () => {
     console.log(`Karmic Futures listening on 0.0.0.0:${port}`);
     console.log(`Serving static files from ${staticDir}`);

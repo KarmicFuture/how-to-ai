@@ -17,19 +17,23 @@ Or without Node: `python3 -m http.server 5180`
 
 ## Deploy on Hostinger (Node.js web app)
 
-1. Add website → **Node.js web app** / Deploy Web App (GitHub).
-2. Use these settings:
-   - **Node version:** 20 (or 18/22)
+A live **503** almost always means the Node process never started (wrong entry file / wrong framework / crash on boot). The site itself is fine locally.
+
+1. Add website → **Deploy Web App** (GitHub: `KarmicFuture/how-to-ai`).
+2. **Settings & Redeploy** — use exactly:
+   - **Framework:** Express.js (not React/Vite/Other if Express is available)
+   - **Node version:** 20
    - **Build command:** `npm run build`
    - **Start command:** `npm start`
-   - **Application startup / entry file:** `server.js` (repo root) **or** `dist/server.js`
-   - **Output directory:** `dist`
-3. Environment variables (hPanel):
-   - `PORT` — leave Hostinger’s value (do not hardcode)
-   - Optional SMTP: `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`
-4. Redeploy after each push. Smoke-test: `/health` and `/api/workshop/sessions` should return JSON.
+   - **Entry file:** `app.js` ← Hostinger’s default; must exist (we ship it)
+   - **Output directory:** leave **empty** (or `.`). Do **not** set `dist` for this Express app — that can leave `node_modules` behind and crash start.
+3. Environment variables (hPanel): SMTP vars only; do **not** set `PORT` yourself.
+4. Open **Deployments** → latest deploy → read the **log**. If start failed, the reason is there.
+5. After a successful deploy, click **Restart**, then smoke-test:
+   - `https://www.karmicfutures.com/health` → `{"ok":true,...}`
+   - `https://www.karmicfutures.com/api/workshop/sessions` → JSON
 
-`npm run build` copies the site **plus** `server.js` and `lib/` into `dist/`, so Hostinger can start the app even when it treats `dist` as the app root. The server listens on `process.env.PORT` (Hostinger injects this).
+`npm run build` also copies `app.js` + `server.js` + `lib/` into `dist/` as a fallback. Preferred Hostinger mode is still: entry `app.js` at repo root, empty output directory.
 
 ## Offer
 

@@ -4,14 +4,15 @@
   "description": "How to AI — Karmic Futures helping local businesses grow in our AI world",
   "private": true,
   "type": "module",
+  "main": "app.js",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
-    "start": "node server.js",
-    "start:dist": "node dist/server.js",
-    "dev": "node server.js"
+    "start": "node app.js",
+    "start:dist": "node dist/app.js",
+    "dev": "node app.js"
   },
   "dependencies": {
     "express": "^4.21.2",
