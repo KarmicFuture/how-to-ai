@@ -1,5 +1,5 @@
 /**
  * Hostinger entry point (defaults to app.js).
- * Keeps the same server as server.js.
+ * CommonJS so Hostinger's require()-based preload works.
  */
-import "./server.js";
+require("./server.js");

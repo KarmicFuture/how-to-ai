@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "How to AI — Karmic Futures helping local businesses grow in our AI world",
   "private": true,
-  "type": "module",
   "main": "app.js",
   "engines": {
     "node": ">=18"

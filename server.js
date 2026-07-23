@@ -1,16 +1,14 @@
-import express from "express";
-import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { existsSync } from "node:fs";
-import {
+const express = require("express");
+const { join } = require("node:path");
+const { existsSync } = require("node:fs");
+const {
   upsertRegistration,
   verifyRegistration,
   accessWorkshop,
   getWorkshopSessions,
-} from "./lib/workshop-store.js";
-import { sendVerificationEmail } from "./lib/mail.js";
+} = require("./lib/workshop-store.js");
+const { sendVerificationEmail } = require("./lib/mail.js");
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = Number(process.env.PORT) || 3000;
 
@@ -120,8 +118,8 @@ app.use((req, res) => {
 
 function start() {
   // Older Hostinger/Passenger setups expect this instead of a TCP port.
-  if (typeof globalThis.PhusionPassenger !== "undefined") {
-    globalThis.PhusionPassenger.configure({ autoInstall: false });
+  if (typeof global.PhusionPassenger !== "undefined") {
+    global.PhusionPassenger.configure({ autoInstall: false });
     app.listen("passenger");
     console.log("Karmic Futures listening via Phusion Passenger");
     console.log(`Serving static files from ${staticDir}`);
@@ -140,3 +138,5 @@ function start() {
 }
 
 start();
+
+module.exports = app;

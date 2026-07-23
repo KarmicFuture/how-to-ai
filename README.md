@@ -19,6 +19,8 @@ Or without Node: `python3 -m http.server 5180`
 
 A live **503** almost always means the Node process never started (wrong entry file / wrong framework / crash on boot). The site itself is fine locally.
 
+**Important:** This app is CommonJS (no `"type": "module"`). Hostinger’s build preload uses `require()` and breaks if the project is ESM.
+
 1. Add website → **Deploy Web App** (GitHub: `KarmicFuture/how-to-ai`).
 2. **Settings & Redeploy** — use exactly:
    - **Framework:** Express.js (not React/Vite/Other if Express is available)

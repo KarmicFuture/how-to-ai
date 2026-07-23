@@ -41,7 +41,6 @@ writeFileSync(
       name: pkg.name,
       version: pkg.version,
       private: true,
-      type: "module",
       engines: pkg.engines,
       main: "app.js",
       scripts: {
